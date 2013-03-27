@@ -1,53 +1,48 @@
-<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!DOCTYPE html>
+<html lang="en"><!--manifest="manifest.appcache">-->
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <title>TimerX3</title>
+        <meta name="description" content="TimerX3 is a timer web app to help you with cooking and other things you want to keep track">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="styles/main.css">
-        <!-- build:js scripts/vendor/modernizr.js -->
-        <script src="components/modernizr/modernizr.js"></script>
-        <!-- endbuild -->
     </head>
     <body>
-        <div class="container">
-            <div class="hero-unit">
-                <h1>'Allo, 'Allo!</h1>
-                <p>You now have</p>
-                <ul>
-                    <li>HTML5 Boilerplate</li>
-                    <li>Twitter Bootstrap</li>
-                </ul>
-                <p>installed.</p>
-                <h3>Enjoy coding! - Yeoman</h3>
+        <div class="row row-display">
+            <button id="timer1" class="display">00:00:00</button>
+        </div>
+        <div class="row row-display split">
+            <div><button id="timer2" class="display">00:00:00</button></div>
+            <div><button id="timer3" class="display">00:00:00</button></div>
+        </div>
+        <div class="row">
+            <div class="timeinput">
+                <button id="hplus" class="spinner">+</button>
+                <input id="hours" type="number" min="0" max="23" value="0">
+                <button id="hminus" class="spinner">−</button>
+            </div>
+            <div class="timeinput">
+                <button id="mplus" class="spinner">+</button>
+                <input id="mins" type="number" min="0" max="59" value="0">
+                <button id="mminus" class="spinner">−</button>
+            </div>
+            <div class="timeinput">
+                <button id="splus" class="spinner">+</button>
+                <input id="secs" type="number" min="0" max="59" value="0">
+                <button id="sminus" class="spinner">−</button>
+            </div>
+        </div>
+        <div class="row btn">
+            <div><button id="btn1">Start</button></div>
+            <div class="split">
+                <div><button id="btn2">Start</button></div>
+                <div><button id="btn3">Start</button></div>
             </div>
         </div>
 
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
-
         <!-- build:js scripts/main.js -->
-        <script src="components/jquery/jquery.js"></script>
         <script src="scripts/main.js"></script>
-        <!-- endbuild -->
-
-        <!-- build:js(.tmp) scripts/coffee.js -->
-        <script src="scripts/hello.js"></script>
         <!-- endbuild -->
 </body>
 </html>
