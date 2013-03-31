@@ -224,6 +224,14 @@ module.exports = function (grunt) {
                 dest: '<%= yeoman.dist %>/manifest.appcache'
             }
         },
+        githubPages: {
+            target: {
+                options: {
+                    commitMessage: 'New deployment to github pages'
+                },
+                src: 'dist'
+            }
+        }
     });
 
     grunt.renameTask('regarde', 'watch');
@@ -260,6 +268,10 @@ module.exports = function (grunt) {
         'uglify',
         'copy',
         'usemin'
+    ]);
+
+    grunt.registerTask('deploy', [
+        'githubPages:target'
     ]);
 
     grunt.registerTask('default', [

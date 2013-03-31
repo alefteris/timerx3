@@ -19,7 +19,8 @@
     "grunt-mocha": "~0.2.3",
     "grunt-open": "~0.2.0",
     "matchdep": "~0.1.1",
-    "grunt-manifest": "~0.4.0"
+    "grunt-manifest": "~0.4.0",
+    "grunt-github-pages": "0.0.3"
   },
   "engines": {
     "node": ">=0.8.0"
