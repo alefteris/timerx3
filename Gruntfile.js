@@ -219,7 +219,8 @@ module.exports = function (grunt) {
                 src: [
                     '*.html',
                     'scripts/*.js',
-                    'styles/*.css'
+                    'styles/*.css',
+                    'media/*.ogg'
                 ],
                 dest: '<%= yeoman.dist %>/manifest.appcache'
             }
@@ -271,6 +272,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('deploy', [
+        'manifest',
         'githubPages:target'
     ]);
 
