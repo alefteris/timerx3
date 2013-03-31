@@ -1,0 +1,11 @@
+CACHE MANIFEST
+# Time: Sun Mar 31 2013 19:12:59 GMT+0300 (EEST)
+
+CACHE:
+index.html
+scripts/main.js
+styles/main.css
+
+NETWORK:
+http://*
+https://*
