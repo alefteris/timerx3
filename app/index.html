@@ -10,40 +10,46 @@
         <link rel="stylesheet" href="styles/main.css">
     </head>
     <body>
-        <div class="row row-display">
-            <button id="timer1" class="display">00:00:00</button>
-        </div>
-        <div class="row row-display split">
-            <div><button id="timer2" class="display">00:00:00</button></div>
-            <div><button id="timer3" class="display">00:00:00</button></div>
-        </div>
-        <div class="row">
-            <div class="timeinput">
-                <button id="hplus" class="spinner">+</button>
-                <input id="hours" type="number" min="0" max="23" value="0">
-                <button id="hminus" class="spinner">−</button>
+        <header>
+            <a href="#" class="menubtn"><img src="images/menu.svg"></a>
+            <h1>TimerX3</h1>
+        </header>
+        <div class="main">
+            <div class="row row-first">
+                <button id="timer1" class="display">00:00:00</button>
             </div>
-            <div class="timeinput">
-                <button id="mplus" class="spinner">+</button>
-                <input id="mins" type="number" min="0" max="59" value="0">
-                <button id="mminus" class="spinner">−</button>
+            <div class="row split">
+                <div><button id="timer2" class="display">00:00:00</button></div>
+                <div><button id="timer3" class="display">00:00:00</button></div>
             </div>
-            <div class="timeinput">
-                <button id="splus" class="spinner">+</button>
-                <input id="secs" type="number" min="0" max="59" value="0">
-                <button id="sminus" class="spinner">−</button>
+            <div class="row">
+                <div class="timeinput">
+                    <button id="hplus" class="spinner">+</button>
+                    <input id="hours" type="number" min="0" max="23" value="0">
+                    <button id="hminus" class="spinner">−</button>
+                </div>
+                <div class="timeinput">
+                    <button id="mplus" class="spinner">+</button>
+                    <input id="mins" type="number" min="0" max="59" value="0">
+                    <button id="mminus" class="spinner">−</button>
+                </div>
+                <div class="timeinput">
+                    <button id="splus" class="spinner">+</button>
+                    <input id="secs" type="number" min="0" max="59" value="0">
+                    <button id="sminus" class="spinner">−</button>
+                </div>
             </div>
-        </div>
-        <div class="row btn">
-            <div><button id="btn1">Start</button></div>
-            <div class="split">
-                <div><button id="btn2">Start</button></div>
-                <div><button id="btn3">Start</button></div>
+            <div class="row btn">
+                <div><button id="btn1">Start</button></div>
+                <div class="split">
+                    <div><button id="btn2">Start</button></div>
+                    <div><button id="btn3">Start</button></div>
+                </div>
             </div>
         </div>
 
         <!-- build:js scripts/main.js -->
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
-</body>
+    </body>
 </html>
