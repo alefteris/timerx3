@@ -1,4 +1,5 @@
 @import 'compass/css3/box-sizing';
+@import 'compass/css3/user-interface';
 @import 'normalize.scss/_normalize.scss';
 
 $margin: 4px;
@@ -12,6 +13,7 @@ $margin: 4px;
 
 * {
     @include box-sizing(border-box);
+    @include user-select(none);
 }
 
 html, body {
@@ -26,6 +28,10 @@ html, body {
 button {
     width: 100%;
     height: 100%;
+}
+
+input {
+    @include user-select(text);
 }
 
 input[type=number] {
