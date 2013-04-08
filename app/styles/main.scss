@@ -1,5 +1,6 @@
 @import 'compass/css3/box-sizing';
 @import 'compass/css3/user-interface';
+@import 'compass/css3/transition';
 @import 'normalize.scss/_normalize.scss';
 
 $margin: 4px;
@@ -21,14 +22,38 @@ html, body {
     height: 100%;
 }
 
-.main {
-    height: 100%;
-    padding: $margin;
+body {
+    background: #333;
+
+    & > .container {
+        height: 100%;
+        overflow: hidden;
+    }
 }
 
 button {
     width: 100%;
+}
+
+#center-panel {
+    position: relative;
+    left: 0;
     height: 100%;
+    background: #fff;
+    @include single-transition(left, 0.3s);
+
+    &.sidepanel-enabled {
+        left: 80%;
+        @include single-transition(left, 0.3s);
+    }
+}
+
+.main {
+    height: 100%;
+    padding: $margin;
+    & button {
+        height: 100%;
+    }
 }
 
 input {
@@ -55,7 +80,7 @@ header {
     padding: 7px 26px $margin $margin;
 }
 
-.menubtn {
+#sidepanelbtn {
     float: left;
     padding: 1px 3px;
 }
@@ -126,4 +151,57 @@ h1 {
 
 .hidden {
     display: none;
+}
+
+.right-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 100%;
+    overflow: auto;
+    color: #fff;
+
+    h2 {
+        font-size: 1rem;
+        line-height: 1rem;
+        margin: 0;
+        padding: 10px;
+        background: #5f5f5f;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    button {
+        padding: 5px;
+        background: #008eab;
+        color: #fff;
+        border: 0;
+        border-radius: 3px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        cursor: pointer;
+        color: inherit;
+        text-decoration: none;
+        padding: 5px;
+        margin-bottom: 10px;
+        background: #eaeae7;
+        color: #333;
+    }
+
+    .description {
+        font-weight: bold;
+    }
+
+    .duration {
+        color: #5f5f5f;
+    }
 }

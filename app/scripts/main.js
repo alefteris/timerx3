@@ -2,8 +2,43 @@
 
     'use strict';
 
-    var Alarm = function Alarm() {
 
+    // Helpers
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Generates UUID. Used as a preset id
+    var getUuid = function getUuid() {
+        var i,
+            random,
+            uuid = '';
+
+        for (i = 0; i < 32; i++) {
+            random = Math.random() * 16 | 0;
+            if (i === 8 || i === 12 || i === 16 || i === 20) {
+                uuid += '-';
+            }
+            uuid += (i === 12 ? 4 : (i === 16 ? (random & 3 | 8) : random)).toString(16);
+        }
+        return uuid;
+    };
+
+    // Converts seconds to string for display
+    var getTimeLeftString = function getTimeLeftString(time) {
+        var h   = Math.floor(time / 3600);
+        var m = Math.floor((time - (h * 3600)) / 60);
+        var s = time - (h * 3600) - (m * 60);
+        if (h < 10) { h = '0' + h; }
+        if (m < 10) { m = '0' + m; }
+        if (s < 10) { s = '0' + s; }
+        return h + ':' + m + ':' + s;
+    };
+
+
+    // Classes
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Alarm class
+    var Alarm = function Alarm() {
         var requestsCounter = 0;
         var vibrateInterval = null;
         var audioOuput = new Audio('media/beep.ogg');
@@ -11,7 +46,6 @@
 
         this.startAlarm = function startAlarm() {
             requestsCounter++;
-            console.log(requestsCounter);
             if (requestsCounter < 2) {
                 audioOuput.play();
                 if (navigator.vibrate) {
@@ -24,7 +58,6 @@
             if (requestsCounter > 0) {
                 requestsCounter--;
             }
-            console.log(requestsCounter);
             if (requestsCounter === 0) {
                 audioOuput.pause();
                 audioOuput.currentTime = 0;
@@ -46,24 +79,22 @@
         var startVibration = function startVibration() {
             vibrateInterval = window.setInterval(doVibration, 1000);
         };
-
     };
 
-    var alarm = new Alarm();
-
-    var Timer = function Timer(elDisplay, elButton) {
-
+    // Timer class
+    var Timer = function Timer(elDisplay, elButton, alarm) {
         this.time = 0;
         this.status = 'off'; // other values: 'ticking' and 'alarm'
         this.elDisplay = elDisplay;
         this.elButton = elButton;
+        this.alarm = alarm;
         var interval = null;
         var that = this;
 
         this.start = function start(time) {
             startTicking(time);
             that.status = 'ticking';
-            alarm.stopAlarm();
+            that.alarm.stopAlarm();
             updateUI();
         };
 
@@ -99,19 +130,8 @@
             window.clearInterval(interval);
         };
 
-        var getTimeLeftString = function getTimeLeftString() {
-            var h   = Math.floor(that.time / 3600);
-            var m = Math.floor((that.time - (h * 3600)) / 60);
-            var s = that.time - (h * 3600) - (m * 60);
-            if (h < 10) {h = '0' + h;}
-            if (m < 10) {m = '0' + m;}
-            if (s < 10) {s = '0' + s;}
-            return h + ':' + m + ':' + s;
-        };
-
         var updateUI = function updateUI() {
-            logStatus();
-            that.elDisplay.textContent = getTimeLeftString();
+            that.elDisplay.textContent = getTimeLeftString(that.time);
 
             switch (that.status) {
             case 'ticking':
@@ -121,26 +141,37 @@
             case 'alarm':
                 that.elButton.innerHTML = 'Start';
                 that.elDisplay.classList.add('finished');
-                alarm.startAlarm();
+                that.alarm.startAlarm();
                 break;
             case 'off':
                 that.elButton.innerHTML = 'Start';
                 that.elDisplay.classList.remove('finished');
-                alarm.stopAlarm();
+                that.alarm.stopAlarm();
                 break;
             default:
                 alert('Something went wrong');
             }
         };
-
-        var logStatus = function logStatus() {
-            console.log('Timer: ' + that.status + ', remaining ' + getTimeLeftString());
-        };
-
     };
 
+    // Preset class
+    var Preset = function Preset(duration, description) {
+        this.id = getUuid();
+        this.duration = duration;
+        this.description = description;
+    };
+
+    // On document ready
     document.onreadystatechange = function () {
         if (document.readyState === 'interactive') {
+
+            var presets = [],
+                lastEnteredDuration = 0,
+                alarm = new Alarm();
+
+
+            // UI elements references
+            ////////////////////////////////////////////////////////////////////
 
             // Hours
             var hoursPlusButton = document.getElementById('hplus');
@@ -162,10 +193,66 @@
             var timer1Display = document.getElementById('timer1');
             var timer2Display = document.getElementById('timer2');
             var timer3Display = document.getElementById('timer3');
+            // Side panel
+            var sidePanelButton = document.getElementById('sidepanelbtn');
+            var addPresetButton = document.getElementById('addpreset');
 
-            var timer1 = new Timer(timer1Display, timer1Button);
-            var timer2 = new Timer(timer2Display, timer2Button);
-            var timer3 = new Timer(timer3Display, timer3Button);
+
+            // UI functions
+            ////////////////////////////////////////////////////////////////////
+
+            var timer1 = new Timer(timer1Display, timer1Button, alarm),
+                timer2 = new Timer(timer2Display, timer2Button, alarm),
+                timer3 = new Timer(timer3Display, timer3Button, alarm);
+
+            // Associate controls with timers
+            timer1Button.timer = timer1Display.timer = timer1;
+            timer2Button.timer = timer2Display.timer = timer2;
+            timer3Button.timer = timer3Display.timer = timer3;
+
+            // Get duration in seconds from the UI
+            var getDuration = function getDuration() {
+                return Number(hoursInput.value) * 3600 +
+                       Number(minsInput.value) * 60 +
+                      Number(secsInput.value);
+            };
+
+            // Set duration in seconds in the UI
+            var setDuration = function setDuration(seconds) {
+                var time = Number(seconds);
+                var h = 0;
+                var m = 0;
+                var s = 0;
+                h = Math.floor(time / 3600);
+                m = Math.floor((time - (h * 3600)) / 60);
+                s = time - (h * 3600) - (m * 60);
+                hoursInput.value = h;
+                minsInput.value = m;
+                secsInput.value = s;
+            };
+
+            // Toggle side panel display
+            var toggleSidePanel = function toggleSidePanel() {
+                document.getElementById('center-panel').classList.toggle('sidepanel-enabled');
+            };
+
+            var updatePresetsUI = function updatePresetsUI() {
+                document.getElementById('presets').innerHTML = '';
+                presets.forEach(function (el) {
+                    var duration = getTimeLeftString(el.duration);
+                    var description = el.description;
+                    var tagString = '<div class="description">' + description + '</div><div class="duration">' + duration + '</div>';
+                    var li = document.createElement('li');
+                    li.dataset.id = el.id;
+                    li.innerHTML = tagString;
+                    li.addEventListener('click', setDurationFromPresetHandler, false);
+                    document.getElementById('presets').appendChild(li);
+                });
+            };
+
+
+            // Event handlers
+            ////////////////////////////////////////////////////////////////////
 
             // Hours
             var increaseHoursHandler = function increaseHoursHandler() {
@@ -224,59 +311,79 @@
                 }
             };
 
-            var getTime = function getTime() {
-                var timeInSecs = Number(hoursInput.value) * 3600 +
-                                 Number(minsInput.value) * 60 +
-                                 Number(secsInput.value);
-                return timeInSecs;
-            };
-
-            var setTime = function setTime(timeInSecs) {
-                var time = Number(timeInSecs);
-                var h = 0;
-                var m = 0;
-                var s = 0;
-                h = Math.floor(time / 3600);
-                m = Math.floor((time - (h * 3600)) / 60);
-                s = time - (h * 3600) - (m * 60);
-                hoursInput.value = h;
-                minsInput.value = m;
-                secsInput.value = s;
-            };
-
-            var toggleTimerHandler = function toggleTimerHandler(event) {
-                var timer = event.target.timer;
-                if (timer.status === 'ticking') {
-                    timer.stop();
-                } else {
-                    if (!getTime()) {
-                        alert('Select time first');
-                    } else {
-                        timer.start(getTime());
-                        if (window.localStorage) {
-                            window.localStorage.setItem('last', getTime());
-                        }
-                    }
-                }
-            };
-
-            var dismissAlarmHandler = function dismissAlarmHandler(event) {
-                var timer = event.target.timer;
-                timer.dismissAlarm();
-            };
-
+            // Allow 2 chars only to be entered in duration
             var timeInputHandler = function timeInputHandler() {
                 if (this.value.length > 2) {
                     this.value = this.value.slice(0, 2);
                 }
             };
 
-            // Associate controls with timers
-            timer1Button.timer = timer1Display.timer = timer1;
-            timer2Button.timer = timer2Display.timer = timer2;
-            timer3Button.timer = timer3Display.timer = timer3;
+            // Toggle timer status
+            var toggleTimerHandler = function toggleTimerHandler(event) {
+                var timer = event.target.timer;
+                if (timer.status === 'ticking') {
+                    timer.stop();
+                } else {
+                    if (!getDuration()) {
+                        alert('Select time first');
+                    } else {
+                        timer.start(getDuration());
+                        lastEnteredDuration = getDuration();
+                        saveLastEnteredDuration();
+                    }
+                }
+            };
 
-            // Event listeners
+            // Dismiss timer
+            var dismissAlarmHandler = function dismissAlarmHandler(event) {
+                var timer = event.target.timer;
+                timer.dismissAlarm();
+            };
+
+            // Toggle side panel
+            var sidePanelButtonHandler = function menuButtonHandler(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                toggleSidePanel();
+            };
+
+            // Set duration from selected preset
+            var setDurationFromPresetHandler = function setDurationFromPresetHandler(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var id = (event.currentTarget.dataset.id);
+                presets.forEach(function (el) {
+                    if (el.id === id) {
+                        setDuration(el.duration);
+                        toggleSidePanel();
+                    }
+                });
+            };
+
+            // Add new preset
+            var addPresetHandler = function addPresetHandler(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var duration = getDuration();
+                if (!duration) {
+                    alert('Enter duration first.');
+                } else {
+                    var description = prompt('Preset description');
+                    var trimmedDescription = description.trim();
+                    if (!trimmedDescription) {
+                        alert('You must enter a description first.');
+                    } else {
+                        var preset = new Preset(duration, trimmedDescription);
+                        presets.push(preset);
+                        savePresets();
+                        updatePresetsUI();
+                    }
+                }
+            };
+
+
+            // Register event listeners
+            ////////////////////////////////////////////////////////////////////
 
             // Plus/Minus buttons
             hoursPlusButton.addEventListener('click', increaseHoursHandler, false);
@@ -285,27 +392,57 @@
             minsMinusButton.addEventListener('click', decreaseMinsHandler, false);
             secsPlusButton.addEventListener('click', increaseSecsHandler, false);
             secsMinusButton.addEventListener('click', decreaseSecsHandler, false);
-
             // Start/Stop timer buttons
             timer1Button.addEventListener('click', toggleTimerHandler, false);
             timer2Button.addEventListener('click', toggleTimerHandler, false);
             timer3Button.addEventListener('click', toggleTimerHandler, false);
-
-            // Time display
+            // Time displays
             timer1Display.addEventListener('click', dismissAlarmHandler, false);
             timer2Display.addEventListener('click', dismissAlarmHandler, false);
             timer3Display.addEventListener('click', dismissAlarmHandler, false);
-
-            // Time input
+            // Duration input fields
             hoursInput.addEventListener('input', timeInputHandler, false);
             minsInput.addEventListener('input', timeInputHandler, false);
             secsInput.addEventListener('input', timeInputHandler, false);
+            // Menu button
+            sidePanelButton.addEventListener('click', sidePanelButtonHandler, false);
+            // Add preset button
+            addPresetButton.addEventListener('click', addPresetHandler, false);
 
-            if (window.localStorage) {
-                var time = window.localStorage.getItem('last');
-                setTime(time);
-            }
 
+            // Storage
+            ////////////////////////////////////////////////////////////////////
+
+            var savePresets = function savePresets() {
+                localStorage.setItem('presets', JSON.stringify(presets));
+            };
+
+            var loadPresets = function loadPresets() {
+                if (!localStorage.getItem('presets')) {
+                    localStorage.setItem('presets', JSON.stringify([]));
+                }
+                presets = JSON.parse(localStorage.getItem('presets'));
+            };
+
+            var saveLastEnteredDuration = function saveLastEnteredDuration() {
+                lastEnteredDuration = localStorage.setItem('last', lastEnteredDuration);
+            };
+
+            var loadLastEnteredDuration = function loadLastEnteredDuration() {
+                if (!localStorage.getItem('last')) {
+                    localStorage.setItem('last', 0);
+                }
+                lastEnteredDuration = localStorage.getItem('last');
+            };
+
+
+            // Initialize app
+            ////////////////////////////////////////////////////////////////////
+
+            loadLastEnteredDuration();
+            setDuration(lastEnteredDuration);
+            loadPresets();
+            updatePresetsUI();
         }
     };
 
