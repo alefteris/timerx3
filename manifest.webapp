@@ -16,5 +16,5 @@
     "name": "Thanos Lefteris",
     "url": "http://thanoslefteris.com"
   },
-  "appcache_path": "http://alefteris.github.io/timerx3/manifest.appcache"
+  "appcache_path": "/timerx3/manifest.appcache"
 }
