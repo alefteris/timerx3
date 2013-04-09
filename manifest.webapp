@@ -1,7 +1,7 @@
 {
   "version": "0.0.1",
   "name": "TimerX3",
-  "description": "TimerX3 is a timer web app to help you with cooking and other things you want to keep track",
+  "description": "TimerX3 is a simple cooking timer",
   "icons": {
     "16": "/timerx3/images/logo-16.png",
     "30": "/timerx3/images/logo-30.png",
