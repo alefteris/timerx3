@@ -1,7 +1,8 @@
 {
   "name": "timerx3",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
+    "fastclick": "~0.6.2",
     "normalize.scss": "~2.1.0"
   },
   "devDependencies": {}

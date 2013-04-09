@@ -165,6 +165,8 @@
     document.onreadystatechange = function () {
         if (document.readyState === 'interactive') {
 
+            new FastClick(document.body);
+
             var presets = [],
                 lastEnteredDuration = 0,
                 alarm = new Alarm();

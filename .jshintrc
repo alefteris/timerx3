@@ -20,5 +20,8 @@
     "trailing": true,
     "smarttabs": true,
     "devel": true,
-    "bitwise": false
+    "bitwise": false,
+    "globals": {
+        "FastClick": true
+    }
 }
