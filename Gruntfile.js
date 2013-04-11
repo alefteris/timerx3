@@ -223,7 +223,7 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{ico,txt}',
+                        '*.{ico,txt,html}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/*',
@@ -244,8 +244,8 @@ module.exports = function (grunt) {
             dist: [
                 'compass:dist',
                 'imagemin',
-                'svgmin',
-                'htmlmin'
+                'svgmin'
+                // 'htmlmin'
             ]
         },
         manifest: {
