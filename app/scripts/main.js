@@ -165,8 +165,6 @@
     document.onreadystatechange = function () {
         if (document.readyState === 'interactive') {
 
-            new FastClick(document.body);
-
             var presets = [],
                 lastEnteredDuration = 0,
                 alarm = new Alarm();
@@ -247,7 +245,8 @@
                     var li = document.createElement('li');
                     li.dataset.id = el.id;
                     li.innerHTML = tagString;
-                    li.addEventListener('click', setDurationFromPresetHandler, false);
+                    new Hammer(li).on('tap', setDurationFromPresetHandler);
+                    new Hammer(li).on('hold', deletePresetHandler);
                     document.getElementById('presets').appendChild(li);
                 });
             };
@@ -353,11 +352,12 @@
             var setDurationFromPresetHandler = function setDurationFromPresetHandler(event) {
                 event.preventDefault();
                 event.stopPropagation();
-                var id = (event.currentTarget.dataset.id);
+                var id = event.currentTarget.dataset.id;
                 presets.forEach(function (el) {
                     if (el.id === id) {
                         setDuration(el.duration);
                         toggleSidePanel();
+                        return;
                     }
                 });
             };
@@ -369,6 +369,7 @@
                 var duration = getDuration();
                 if (!duration) {
                     alert('Enter duration first.');
+                    toggleSidePanel();
                 } else {
                     var description = prompt('Preset description');
                     var trimmedDescription = description.trim();
@@ -383,33 +384,52 @@
                 }
             };
 
+            // Delete preset
+            var deletePresetHandler = function deletePresetHandler(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var id = event.currentTarget.dataset.id;
+                var i;
+                for (i = presets.length - 1; i >= 0; i -=1) {
+                    if (presets[i].id === id) {
+                        var delConfirm = confirm('Delete "' + presets[i].description + '" preset?');
+                        if (delConfirm) {
+                            presets.splice(i, 1);
+                            savePresets();
+                            updatePresetsUI();
+                        }
+                        return;
+                    }
+                }
+            };
+
 
             // Register event listeners
             ////////////////////////////////////////////////////////////////////
 
             // Plus/Minus buttons
-            hoursPlusButton.addEventListener('click', increaseHoursHandler, false);
-            hoursMinusButton.addEventListener('click', decreaseHoursHandler, false);
-            minsPlusButton.addEventListener('click', increaseMinsHandler, false);
-            minsMinusButton.addEventListener('click', decreaseMinsHandler, false);
-            secsPlusButton.addEventListener('click', increaseSecsHandler, false);
-            secsMinusButton.addEventListener('click', decreaseSecsHandler, false);
+            new Hammer(hoursPlusButton).on('tap', increaseHoursHandler);
+            new Hammer(hoursMinusButton).on('tap', decreaseHoursHandler);
+            new Hammer(minsPlusButton).on('tap', increaseMinsHandler);
+            new Hammer(minsMinusButton).on('tap', decreaseMinsHandler);
+            new Hammer(secsPlusButton).on('tap', increaseSecsHandler);
+            new Hammer(secsMinusButton).on('tap', decreaseSecsHandler);
             // Start/Stop timer buttons
-            timer1Button.addEventListener('click', toggleTimerHandler, false);
-            timer2Button.addEventListener('click', toggleTimerHandler, false);
-            timer3Button.addEventListener('click', toggleTimerHandler, false);
+            new Hammer(timer1Button).on('tap', toggleTimerHandler);
+            new Hammer(timer2Button).on('tap', toggleTimerHandler);
+            new Hammer(timer3Button).on('tap', toggleTimerHandler);
             // Time displays
-            timer1Display.addEventListener('click', dismissAlarmHandler, false);
-            timer2Display.addEventListener('click', dismissAlarmHandler, false);
-            timer3Display.addEventListener('click', dismissAlarmHandler, false);
+            new Hammer(timer1Display).on('tap', dismissAlarmHandler);
+            new Hammer(timer2Display).on('tap', dismissAlarmHandler);
+            new Hammer(timer3Display).on('tap', dismissAlarmHandler);
             // Duration input fields
             hoursInput.addEventListener('input', timeInputHandler, false);
             minsInput.addEventListener('input', timeInputHandler, false);
             secsInput.addEventListener('input', timeInputHandler, false);
             // Menu button
-            sidePanelButton.addEventListener('click', sidePanelButtonHandler, false);
+            new Hammer(sidePanelButton).on('tap', sidePanelButtonHandler);
             // Add preset button
-            addPresetButton.addEventListener('click', addPresetHandler, false);
+            new Hammer(addPresetButton).on('tap', addPresetHandler);
 
 
             // Storage
