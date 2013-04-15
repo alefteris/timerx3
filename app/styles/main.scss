@@ -1,5 +1,6 @@
 @import 'compass/css3/box-sizing';
 @import 'compass/css3/user-interface';
+@import "compass/css3/transform";
 @import 'compass/css3/transition';
 @import 'normalize.scss/_normalize.scss';
 
@@ -40,11 +41,11 @@ button {
     left: 0;
     height: 100%;
     background: #fff;
-    @include single-transition(left, 0.3s);
+    @include single-transition(all, 0.3s);
 
     &.sidepanel-enabled {
-        left: 80%;
-        @include single-transition(left, 0.3s);
+        @include transform(translateX(80%));
+        @include single-transition(all, 0.3s);
     }
 }
 
