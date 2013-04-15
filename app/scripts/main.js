@@ -342,9 +342,10 @@
             };
 
             // Toggle side panel
-            var sidePanelButtonHandler = function menuButtonHandler(event) {
+            var toggleSidePanelHandler = function menuButtonHandler(event) {
                 event.preventDefault();
                 event.stopPropagation();
+                event.gesture.stopDetect();
                 toggleSidePanel();
             };
 
@@ -427,9 +428,12 @@
             minsInput.addEventListener('input', timeInputHandler, false);
             secsInput.addEventListener('input', timeInputHandler, false);
             // Menu button
-            new Hammer(sidePanelButton).on('tap', sidePanelButtonHandler);
+            new Hammer(sidePanelButton).on('tap', toggleSidePanelHandler);
             // Add preset button
             new Hammer(addPresetButton).on('tap', addPresetHandler);
+            // Swipe to toggle side panel
+            new Hammer(document).on('swipeleft', toggleSidePanelHandler);
+            new Hammer(document).on('swiperight', toggleSidePanelHandler);
 
 
             // Storage
