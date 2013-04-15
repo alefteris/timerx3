@@ -256,7 +256,6 @@ module.exports = function (grunt) {
                 options: {
                     basePath: '<%= yeoman.dist %>',
                     network: ['http://*', 'https://*'],
-                    exclude: ['404.html'],
                     verbose: false,
                     timestamp: true
                 },
