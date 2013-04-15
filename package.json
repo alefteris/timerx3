@@ -24,7 +24,8 @@
     "grunt-concurrent": "~0.1.0",
     "matchdep": "~0.1.1",
     "grunt-manifest": "~0.4.0",
-    "grunt-github-pages": "~0.0.3"
+    "grunt-github-pages": "~0.0.3",
+    "grunt-html-smoosher": "git://github.com/alefteris/grunt-html-smoosher.git"
   },
   "engines": {
     "node": ">=0.8.0"

@@ -89,7 +89,8 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
-            server: '.tmp'
+            server: '.tmp',
+            smoosher: '<%= yeoman.dist %>/*.tmp.html',
         },
         jshint: {
             options: {
@@ -226,7 +227,7 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{ico,txt,html}',
+                        '*.{ico,txt}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/*',
@@ -234,6 +235,10 @@ module.exports = function (grunt) {
                         '*.webapp',
                         'media/*.ogg'
                     ]
+                },
+                {
+                    src: '<%= yeoman.app %>/index.html',
+                    dest: '<%= yeoman.dist %>/index.tmp.html'
                 }]
             }
         },
@@ -276,6 +281,13 @@ module.exports = function (grunt) {
                 },
                 src: 'dist'
             }
+        },
+        smoosher: {
+            dist: {
+                files: {
+                    '<%= yeoman.dist %>/index.html': '<%= yeoman.dist %>/index.tmp.html'
+                }
+            }
         }
     });
 
@@ -312,7 +324,9 @@ module.exports = function (grunt) {
         'uglify',
         'copy',
         'rev',
-        'usemin'
+        'usemin',
+        'smoosher',
+        'clean:smoosher'
     ]);
 
     grunt.registerTask('deploy', [
