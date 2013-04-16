@@ -144,6 +144,13 @@
                 that.elButton.innerHTML = 'Start';
                 that.elDisplay.classList.add('finished');
                 that.alarm.startAlarm();
+                var notification = new Notification('Alarm - TimerX3', {
+                    icon: 'logo-64.png',
+                    body: 'A timer finished.',
+                });
+                notification.onclose = function() {
+                    that.dismissAlarm();
+                };
                 break;
             case 'off':
                 that.elButton.innerHTML = 'Start';
@@ -485,6 +492,7 @@
             setDuration(lastEnteredDuration);
             loadPresets();
             updatePresetsUI();
+            Notification.requestPermission();
 
             page('/', hideSidePanel);
             page('/sidebar', showSidePanel);

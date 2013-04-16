@@ -16,5 +16,10 @@
     "name": "Thanos Lefteris",
     "url": "http://thanoslefteris.com"
   },
-  "appcache_path": "/timerx3/manifest.appcache"
+  "appcache_path": "/timerx3/manifest.appcache",
+  "permissions": {
+    "desktop-notification": {
+        "description": "Required for alarm notification on timer finish."
+    }
+  }
 }
