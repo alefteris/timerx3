@@ -233,7 +233,21 @@
 
             // Toggle side panel display
             var toggleSidePanel = function toggleSidePanel() {
-                document.getElementById('center-panel').classList.toggle('sidepanel-enabled');
+                var centerPanel = document.getElementById('center-panel');
+                centerPanel.classList.toggle('sidepanel-enabled');
+                if (centerPanel.classList.contains('sidepanel-enabled')) {
+                    page.show('/sidebar');
+                } else {
+                    window.history.back();
+                }
+            };
+
+            var showSidePanel = function toggleSidePanel() {
+                document.getElementById('center-panel').classList.add('sidepanel-enabled');
+            };
+
+            var hideSidePanel = function toggleSidePanel() {
+                document.getElementById('center-panel').classList.remove('sidepanel-enabled');
             };
 
             var updatePresetsUI = function updatePresetsUI() {
@@ -469,6 +483,10 @@
             setDuration(lastEnteredDuration);
             loadPresets();
             updatePresetsUI();
+
+            page('/', hideSidePanel);
+            page('/sidebar', showSidePanel);
+            page.start();
         }
     };
 
