@@ -78,12 +78,14 @@ header {
     color: #fff;
     text-align: center;
     // offset the floated menu image so that h1 is centered
-    padding: 7px 26px $margin $margin;
-}
+    padding: 7px 23px $margin $margin;
 
-#sidepanelbtn {
-    float: left;
-    padding: 1px 3px;
+    button {
+        float: left;
+        background: transparent;
+        border: 0;
+        width: auto;
+    }
 }
 
 h1 {

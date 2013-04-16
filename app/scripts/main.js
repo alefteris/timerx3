@@ -194,7 +194,7 @@
             var timer2Display = document.getElementById('timer2');
             var timer3Display = document.getElementById('timer3');
             // Side panel
-            var sidePanelButton = document.getElementById('sidepanelbtn');
+            var sidePanelButton = document.getElementById('toggle-sidepanel');
             var addPresetButton = document.getElementById('addpreset');
 
 
