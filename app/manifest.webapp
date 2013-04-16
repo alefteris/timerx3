@@ -12,6 +12,7 @@
     "128": "/timerx3/logo-128.png",
     "256": "/timerx3/logo-256.png"
   },
+  "launch_path": "/timerx3/",
   "developer": {
     "name": "Thanos Lefteris",
     "url": "http://thanoslefteris.com"
