@@ -51,6 +51,7 @@
                 if (navigator.vibrate) {
                     startVibration();
                 }
+                document.title = 'ALARM - TimerX3';
             }
         };
 
@@ -64,6 +65,7 @@
                 if (navigator.vibrate) {
                     stopVibration();
                 }
+                document.title = 'TimerX3';
             }
         };
 
