@@ -90,7 +90,15 @@ module.exports = function (grunt) {
                 }]
             },
             server: '.tmp',
-            smoosher: '<%= yeoman.dist %>/*.tmp.html',
+            smoosher: {
+                files: [{
+                    src: [
+                        '<%= yeoman.dist %>/*.tmp.html',
+                        '<%= yeoman.dist %>/styles',
+                        '<%= yeoman.dist %>/scripts',
+                    ]
+                }]
+            }
         },
         jshint: {
             options: {
