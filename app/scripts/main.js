@@ -245,7 +245,7 @@
                 var centerPanel = document.getElementById('center-panel');
                 centerPanel.classList.toggle('sidepanel-enabled');
                 if (centerPanel.classList.contains('sidepanel-enabled')) {
-                    page.show('/sidebar');
+                    page.show('#sidebar');
                 } else {
                     window.history.back();
                 }
@@ -495,7 +495,7 @@
             Notification.requestPermission();
 
             page('/', hideSidePanel);
-            page('/sidebar', showSidePanel);
+            page('#sidebar', showSidePanel);
             page.start();
         }
     };
