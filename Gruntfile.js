@@ -241,7 +241,8 @@ module.exports = function (grunt) {
                         'styles/fonts/*',
                         '.nojekyll',
                         '*.webapp',
-                        'media/*.ogg'
+                        'media/*.ogg',
+                        'google09270ac9ac4a3a5d.html'
                     ]
                 },
                 {
@@ -273,7 +274,7 @@ module.exports = function (grunt) {
                     timestamp: true
                 },
                 src: [
-                    '*.html',
+                    'index.html',
                     'scripts/*.js',
                     'styles/*.css',
                     'images/*.{png,jpg,jpeg,gif,webp,svg}',
