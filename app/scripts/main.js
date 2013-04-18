@@ -396,7 +396,10 @@
                     toggleSidePanel();
                 } else {
                     var description = prompt('Preset description');
-                    var trimmedDescription = description.trim();
+                    var trimmedDescription = null;
+                    if (description !== null) {
+                        trimmedDescription = description.trim();
+                    }
                     if (!trimmedDescription) {
                         alert('You must enter a description first.');
                     } else {
