@@ -1,4 +1,4 @@
-# [TimerX3](http://alefteris.github.io/timerx3/)
+# [TimerX3](http://alefteris.github.io/timerx3/) [![Build Status](https://api.travis-ci.org/alefteris/timerx3.png?branch=master)](https://travis-ci.org/alefteris/timerx3)
 
 <a href="http://alefteris.github.io/timerx3/">
   <img src="http://alefteris.github.io/timerx3/logo-64.png" width="64">
