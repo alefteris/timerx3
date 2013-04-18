@@ -6,6 +6,8 @@
     // Helpers
     ////////////////////////////////////////////////////////////////////////////
 
+    var windowHasFocus = true;
+
     var askForNotifications = function askForNotifications() {
         if (window.Notification) {
             Notification.requestPermission(function(perm) {
@@ -156,25 +158,33 @@
                 that.elButton.innerHTML = 'Start';
                 that.elDisplay.classList.add('finished');
                 that.alarm.startAlarm();
-                if (window.Notification) {
-                    notification = new Notification('Alarm - TimerX3', {
-                        icon: 'logo-64.png',
-                        body: 'A timer finished',
-                    });
-                    notification.onclose = function() {
-                        that.dismissAlarm();
-                    };
-                } else if (navigator.mozNotification) {
-                    var icon30 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAABI1BMVEX/////AAD/SQD/VQD/UAD/TwD/TQD/TgD/TgDdXSTdXCbiWyD/TgD/TgD/TgD4Ugn3Ugn/TgD/aSb/UgX/VQn+UQUAAAAGBgYKCgoMDAwhISEpKSkqKio9PT1NTU1YWFhkZGR1dXV4eHh7e3uFhYWIiIiRkZGTk5OVlZWjo6OqqqqrjoGsj4KsrKytkIOukYSxsbG5ubm8vLzAwMDDw8PExMTHx8fIyMjJycnKysrMzMzPz8/Q0NDS0tLT0NDT09PU1NTV0tLV1dXW1tbX19fY2Njb29vc3Nzd3d3f39/j4+Pl5eXnZCvoXB/o6Ojq6urr6+vz8/P19fX29vb39/f6+vr7+/v9/f3+/v7/TgD/mWz/rIf/rIj/0b3/3M3//Pv///8N30akAAAAFnRSTlMAAQcMEB1CW2h+f5ewu9Lv8Pr8/f3+XL7/kwAAAZVJREFUKM+Fk2lbgkAUhTH3FE1c2nfSsLLUwlK0stJSySUrLm73//+KhkVg2rwfeM7wMsPcM2cYxi6Pzx8K+X0e5pdaCrAx0CvGBpa+QdfyCgEJrtPhEkREgy4ndYcBkupkhoKAs4maBAi7beqNAMgnCqKGEZWcDBDxWnMjEB/X+DIhrRZ5SHxtFIeIOd8VhvgUMftASF28qfces4jTOISN/wcBxmhWXSRV6RM1AgjqHUVBrlFYLPUQazJEtf4CkMzxWQqLpW6WzyUhQDALqiI9UTi/u1mXFBVY4mQMJojOxS8P1lf33xAnEPMwPkjMKHy8kdppaHqWAB/jB86mw8O97dRW3hxx4GdC0BGEtvkik0qtpT902RaEDoR+4CNTmphePJMZ2iNtcXprztK35mysic8DcW6B0ZjTlnL1WlEKuryrGLY4TX1PD7Bxocsz/tQw1XEkxdeCgsW+ru/NI7EP9LOJL92rW+PT+YFacbD2RMdhHiZJM0MzqEqFyYxizooinlNRXBRk8v9g9J9rsOgS/XUFvwD41b0VEaL41wAAAABJRU5ErkJggg==';
-                    notification = navigator.mozNotification.createNotification(
-                        'Alarm - TimerX3',
-                        'A timer finished',
-                        icon30);
-                    notification.show();
-                    // Can't get it working on Firefox OS
-                    // notification.onclose = function () {
-                    //     window.parent.alert('Notification clicked');
-                    // };
+                var hidden;
+                if (typeof document.hidden !== 'undefined') {
+                    hidden = 'hidden';
+                } else if (typeof document.webkitHidden !== 'undefined') {
+                    hidden = 'webkitHidden';
+                }
+                if (document[hidden] || !windowHasFocus) {
+                    if (window.Notification) {
+                        notification = new Notification('Alarm - TimerX3', {
+                            icon: 'logo-64.png',
+                            body: 'A timer finished',
+                        });
+                        notification.onclose = function() {
+                            that.dismissAlarm();
+                        };
+                    } else if (navigator.mozNotification) {
+                        var icon30 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAABI1BMVEX/////AAD/SQD/VQD/UAD/TwD/TQD/TgD/TgDdXSTdXCbiWyD/TgD/TgD/TgD4Ugn3Ugn/TgD/aSb/UgX/VQn+UQUAAAAGBgYKCgoMDAwhISEpKSkqKio9PT1NTU1YWFhkZGR1dXV4eHh7e3uFhYWIiIiRkZGTk5OVlZWjo6OqqqqrjoGsj4KsrKytkIOukYSxsbG5ubm8vLzAwMDDw8PExMTHx8fIyMjJycnKysrMzMzPz8/Q0NDS0tLT0NDT09PU1NTV0tLV1dXW1tbX19fY2Njb29vc3Nzd3d3f39/j4+Pl5eXnZCvoXB/o6Ojq6urr6+vz8/P19fX29vb39/f6+vr7+/v9/f3+/v7/TgD/mWz/rIf/rIj/0b3/3M3//Pv///8N30akAAAAFnRSTlMAAQcMEB1CW2h+f5ewu9Lv8Pr8/f3+XL7/kwAAAZVJREFUKM+Fk2lbgkAUhTH3FE1c2nfSsLLUwlK0stJSySUrLm73//+KhkVg2rwfeM7wMsPcM2cYxi6Pzx8K+X0e5pdaCrAx0CvGBpa+QdfyCgEJrtPhEkREgy4ndYcBkupkhoKAs4maBAi7beqNAMgnCqKGEZWcDBDxWnMjEB/X+DIhrRZ5SHxtFIeIOd8VhvgUMftASF28qfces4jTOISN/wcBxmhWXSRV6RM1AgjqHUVBrlFYLPUQazJEtf4CkMzxWQqLpW6WzyUhQDALqiI9UTi/u1mXFBVY4mQMJojOxS8P1lf33xAnEPMwPkjMKHy8kdppaHqWAB/jB86mw8O97dRW3hxx4GdC0BGEtvkik0qtpT902RaEDoR+4CNTmphePJMZ2iNtcXprztK35mysic8DcW6B0ZjTlnL1WlEKuryrGLY4TX1PD7Bxocsz/tQw1XEkxdeCgsW+ru/NI7EP9LOJL92rW+PT+YFacbD2RMdhHiZJM0MzqEqFyYxizooinlNRXBRk8v9g9J9rsOgS/XUFvwD41b0VEaL41wAAAABJRU5ErkJggg==';
+                        notification = navigator.mozNotification.createNotification(
+                            'Alarm - TimerX3',
+                            'A timer finished',
+                            icon30);
+                        notification.show();
+                        // Can't get it working on Firefox OS
+                        // notification.onclose = function () {
+                        //     window.parent.alert('Notification clicked');
+                        // };
+                    }
                 }
                 break;
             case 'off':
@@ -496,6 +506,15 @@
             // Settings
             new Hammer(notificationsButton).on('tap', checkForNotificationPerm);
 
+            window.onblur = function() {
+                windowHasFocus = false;
+                console.log('blur');
+            };
+
+            window.onfocus = function() {
+                windowHasFocus = true;
+                console.log('focus');
+            };
 
             // Storage
             ////////////////////////////////////////////////////////////////////
