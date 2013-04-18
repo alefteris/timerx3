@@ -23,6 +23,7 @@
     "bitwise": false,
     "globals": {
         "Hammer": true,
-        "page": true
+        "page": true,
+        "Notification": true
     }
 }

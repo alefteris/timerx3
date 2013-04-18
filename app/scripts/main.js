@@ -6,6 +6,14 @@
     // Helpers
     ////////////////////////////////////////////////////////////////////////////
 
+    var askForNotifications = function askForNotifications() {
+        if (window.Notification) {
+            Notification.requestPermission(function(perm) {
+                alert('Notifications permission: ' + perm);
+            });
+        }
+    };
+
     // Generates UUID. Used as a preset id
     var getUuid = function getUuid() {
         var i,
@@ -91,6 +99,7 @@
         this.elButton = elButton;
         this.alarm = alarm;
         var interval = null;
+        var notification = null;
         var that = this;
 
         this.start = function start(time) {
@@ -110,6 +119,9 @@
             if (that.status === 'alarm') {
                 that.status = 'off';
                 updateUI();
+                if (notification !== null) {
+                    notification.close();
+                }
             }
         };
 
@@ -144,13 +156,15 @@
                 that.elButton.innerHTML = 'Start';
                 that.elDisplay.classList.add('finished');
                 that.alarm.startAlarm();
-                var notification = new Notification('Alarm - TimerX3', {
-                    icon: 'logo-64.png',
-                    body: 'A timer finished.',
-                });
-                notification.onclose = function() {
-                    that.dismissAlarm();
-                };
+                if (window.Notification) {
+                    notification = new Notification('Alarm - TimerX3', {
+                        icon: 'logo-64.png',
+                        body: 'A timer finished.',
+                    });
+                    notification.onclose = function() {
+                        that.dismissAlarm();
+                    };
+                }
                 break;
             case 'off':
                 that.elButton.innerHTML = 'Start';
@@ -205,6 +219,7 @@
             // Side panel
             var sidePanelButton = document.getElementById('toggle-sidepanel');
             var addPresetButton = document.getElementById('addpreset');
+            var notificationsButton = document.getElementById('notifications');
 
 
             // UI functions
@@ -430,6 +445,13 @@
                 }
             };
 
+            // Ask for Notifications permission
+            var checkForNotificationPerm = function checkForNotificationPerm() {
+                event.preventDefault();
+                event.stopPropagation();
+                askForNotifications();
+            };
+
 
             // Register event listeners
             ////////////////////////////////////////////////////////////////////
@@ -460,6 +482,8 @@
             // Swipe to toggle side panel
             new Hammer(document).on('swipeleft', toggleSidePanelHandler);
             new Hammer(document).on('swiperight', toggleSidePanelHandler);
+            // Settings
+            new Hammer(notificationsButton).on('tap', checkForNotificationPerm);
 
 
             // Storage
@@ -495,7 +519,6 @@
             setDuration(lastEnteredDuration);
             loadPresets();
             updatePresetsUI();
-            Notification.requestPermission();
 
             page('/', hideSidePanel);
             page('#sidebar', showSidePanel);
