@@ -308,6 +308,12 @@
                     new Hammer(li).on('hold', deletePresetHandler);
                     document.getElementById('presets').appendChild(li);
                 });
+                var presetsHint = document.getElementById('presetshint');
+                if (presets.length > 0) {
+                    presetsHint.classList.remove('hidden');
+                } else {
+                    presetsHint.classList.add('hidden');
+                }
             };
 
 
