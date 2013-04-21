@@ -138,17 +138,38 @@ h1 {
     }
 }
 
-.finished {
-    color: #ff0000;
-}
-
 .display {
-    background: #a6a6a6;
+    background: #4d4d4d;
+    color: #e7e7e7;
     border: 0;
     border-radius: 5px;
     font-weight: bold;
     font-size: 1.1rem;
     // font-size: 6vw;
+}
+
+@-webkit-keyframes pulse {
+    from {
+        background-color: #820000;
+    }
+    to {
+        background-color: #b90000;
+    }
+}
+
+@keyframes pulse {
+    from {
+        background-color: #820000;
+    }
+    to {
+        background-color: #b90000;
+    }
+}
+
+.finished {
+    background-color: #820000;
+    -webkit-animation: pulse 0.5s ease-in-out infinite alternate;
+    animation: pulse 0.5s ease-in-out infinite alternate;
 }
 
 .hidden {
