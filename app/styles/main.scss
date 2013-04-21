@@ -45,7 +45,6 @@ button {
 
     &.sidepanel-enabled {
         @include transform(translateX(80%));
-        @include single-transition(all, 0.3s);
     }
 }
 
