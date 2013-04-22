@@ -514,12 +514,10 @@
 
             window.onblur = function() {
                 windowHasFocus = false;
-                console.log('blur');
             };
 
             window.onfocus = function() {
                 windowHasFocus = true;
-                console.log('focus');
             };
 
             // Storage
