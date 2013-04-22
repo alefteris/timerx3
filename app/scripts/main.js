@@ -179,11 +179,13 @@
                             'Alarm - TimerX3',
                             'A timer finished',
                             icon30);
+                        notification.onclick = function () {
+                            navigator.mozApps.getSelf().onsuccess = function(evt) {
+                                var app = evt.target.result;
+                                app.launch();
+                            };
+                        };
                         notification.show();
-                        // Can't get it working on Firefox OS
-                        // notification.onclose = function () {
-                        //     window.parent.alert('Notification clicked');
-                        // };
                     }
                 }
                 break;
