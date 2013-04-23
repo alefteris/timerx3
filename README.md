@@ -19,7 +19,7 @@ TimerX3 is a cooking timer for the modern web.
    * Visual alarm with a pulsing red color
    * Alarm sound
    * Window title change
-   * Desktop notification, when the app is not visible (works in Chrome, Firefox 23+ and Firefox OS)
+   * Desktop notification, when the app is not visible (works in Chrome, Firefox 22+ and Firefox OS)
    * Vibration (works in Firefox for Android and Firefox OS)
 
 ## Why?
@@ -47,7 +47,7 @@ Here is a list of web standards used by the app and supported by modern web brow
  * [Touch Events](http://www.w3.org/TR/touch-events/): used for faster responsiveness on touch devices compared with normal click events. Also for the swipe gesture to reveal the side panel
  * [Web Application Manifest Format and Management APIs](http://mozilla.github.io/webapps-spec/): used for installing site as an app
 
- ### Tools
+### Tools
 
  * [Yeoman](http://yeoman.io/): provided the initial app scaffold
  * [Grunt](http://gruntjs.com/): used for building, previewing, deploying the app and [other tasks](https://github.com/alefteris/timerx3/blob/master/Gruntfile.js)
@@ -82,7 +82,19 @@ Install it as an app from the Chrome Web Store or Firefox Marketplace.
 
 [Firefox Marketplace](https://marketplace.firefox.com/app/timerx3/) (pending review)
 
-# Build Instructions
+## Browser support
+
+The list of browsers I have tested with are:
+
+ * Chrome
+ * Firefox
+ * Firefox OS
+ * Firefox for Android
+ * Android 4.1 browser
+
+For the last two browsers on Android, when the app goes into the background, the timers stop. Notifications also do not work on Android. So, there is little point in running the app in this platform.
+
+## Build Instructions
 
 You will need to have [Node.js](http://nodejs.org/) installed in your system.
 
