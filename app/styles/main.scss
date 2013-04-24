@@ -172,10 +172,6 @@ h1 {
     animation: pulse 0.5s ease-in-out infinite alternate;
 }
 
-.hidden {
-    display: none;
-}
-
 .right-panel {
     position: fixed;
     top: 0;
@@ -194,7 +190,7 @@ h1 {
     }
 
     .container {
-        padding: 10px;
+        padding: 15px 10px;
     }
 
     button {
@@ -203,11 +199,18 @@ h1 {
         color: #fff;
         border: 0;
         border-radius: 3px;
+        margin-bottom: 15px;
+    }
+
+    .settings button {
+        background: #a6a6a6;
+        color: #333333;
     }
 
     ul {
         list-style-type: none;
         padding: 0;
+        margin: 0;
     }
 
     li {
@@ -235,4 +238,8 @@ h1 {
     font-size: 0.8rem;
     color: gray;
     text-align: center;
+}
+
+.hidden {
+    display: none;
 }

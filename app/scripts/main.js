@@ -243,6 +243,7 @@
             var sidePanelButton = document.getElementById('toggle-sidepanel');
             var addPresetButton = document.getElementById('addpreset');
             var notificationsButton = document.getElementById('notifications');
+            var appInstallButton = document.getElementById('appinstall');
 
 
             // UI functions
@@ -315,6 +316,30 @@
                     presetsHint.classList.remove('hidden');
                 } else {
                     presetsHint.classList.add('hidden');
+                }
+            };
+
+            // Hide app install button if installation not supported or
+            // when app is already installed
+            var checkAppInstallSupport = function checkAppInstallSupport() {
+                // Firefox
+                if (typeof window.navigator.mozApps !== 'undefined') {
+                    var request = window.navigator.mozApps.getSelf();
+                    request.onsuccess = function() {
+                        if (request.result) {
+                            appInstallButton.classList.add('hidden');
+                        }
+                    };
+                } else if (typeof chrome !== 'undefined') {
+                    if (typeof chrome.app !== 'undefined') {
+                        if (chrome.app.isInstalled) {
+                            appInstallButton.classList.add('hidden');
+                        }
+                    } else {
+                        appInstallButton.classList.add('hidden');
+                    }
+                } else {
+                    appInstallButton.classList.add('hidden');
                 }
             };
 
@@ -481,6 +506,27 @@
                 askForNotifications();
             };
 
+            var appInstallHandler = function appInstallHandler() {
+                if (typeof window.navigator.mozApps !== 'undefined') {
+                    var request = window.navigator.mozApps.install('http://alefteris.github.io/timerx3/manifest.webapp');
+                    request.onsuccess = function () {
+                        // Save the App object that is returned
+                        alert('Installation successful!');
+                        appInstallButton.classList.add('hidden');
+                    };
+                    request.onerror = function () {
+                        alert('Install failed, error: ' + this.error.name);
+                    };
+                } else {
+                    chrome.webstore.install('https://chrome.google.com/webstore/detail/dekigijbacfpbgmockjacjpnmfmhnhje',
+                        function () {
+                        appInstallButton.classList.add('hidden');
+                    }, function (error) {
+                        alert('Install failed, error: ' + error);
+                    });
+                }
+            };
+
 
             // Register event listeners
             ////////////////////////////////////////////////////////////////////
@@ -513,6 +559,7 @@
             new Hammer(document).on('swiperight', toggleSidePanelHandler);
             // Settings
             new Hammer(notificationsButton).on('tap', checkForNotificationPerm);
+            new Hammer(appInstallButton).on('tap', appInstallHandler);
 
             window.onblur = function() {
                 windowHasFocus = false;
@@ -555,6 +602,7 @@
             setDuration(lastEnteredDuration);
             loadPresets();
             updatePresetsUI();
+            checkAppInstallSupport();
 
             page('/', hideSidePanel);
             page('#sidebar', showSidePanel);
