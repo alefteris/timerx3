@@ -168,7 +168,7 @@
                     if (window.Notification) {
                         notification = new Notification('Alarm - TimerX3', {
                             icon: 'logo-64.png',
-                            body: 'A timer finished',
+                            body: 'A timer finished'
                         });
                         notification.onclose = function() {
                             that.dismissAlarm();

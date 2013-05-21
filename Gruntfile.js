@@ -95,7 +95,7 @@ module.exports = function (grunt) {
                     src: [
                         '<%= yeoman.dist %>/*.tmp.html',
                         '<%= yeoman.dist %>/styles',
-                        '<%= yeoman.dist %>/scripts',
+                        '<%= yeoman.dist %>/scripts'
                     ]
                 }]
             }
