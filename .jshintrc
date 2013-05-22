@@ -19,11 +19,5 @@
     "trailing": true,
     "smarttabs": true,
     "devel": true,
-    "bitwise": false,
-    "globals": {
-        "Hammer": true,
-        "page": true,
-        "Notification": true,
-        "chrome": true
-    }
+    "bitwise": false
 }

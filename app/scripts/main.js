@@ -1,3 +1,5 @@
+/*global Hammer, page, Notification, chrome*/
+
 (function () {
 
     'use strict';
