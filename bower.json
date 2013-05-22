@@ -1,6 +1,6 @@
 {
   "name": "timerx3",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "dependencies": {
     "hammerjs": "~1.0.5",
     "normalize.scss": "~2.1.0",
