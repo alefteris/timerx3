@@ -74,13 +74,15 @@ To install it as an app, go to the app settings in the side panel. This is suppo
 
 ### Install it from an web app store
 
-Install it as an app from the Chrome Web Store or Firefox Marketplace.
+Install it as an app from the Firefox Marketplace or the Chrome Web Store.
+
+<a href="https://marketplace.firefox.com/app/timerx3/">
+  <img src="http://alefteris.github.io/timerx3/images-other/firefox-marketplace-badge.png" width="206" height="58">
+</a>
 
 <a href="https://chrome.google.com/webstore/detail/timerx3/dekigijbacfpbgmockjacjpnmfmhnhje">
   <img src="http://alefteris.github.io/timerx3/images-other/chrome-web-store-badge.png" width="206" height="58">
 </a>
-
-[Firefox Marketplace](https://marketplace.firefox.com/app/timerx3/) (pending review)
 
 ## Browser support
 
