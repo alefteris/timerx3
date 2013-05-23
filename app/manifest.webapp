@@ -1,11 +1,16 @@
 {
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "TimerX3",
-  "description": "TimerX3 is a simple cooking timer",
+  "description": "TimerX3 is a cooking timer for the modern web",
   "icons": {
+    "16": "/timerx3/icon-16.png",
     "30": "/timerx3/ffos-icon-30.png",
+    "32": "/timerx3/icon-32.png",
+    "48": "/timerx3/icon-48.png",
     "60": "/timerx3/ffos-icon-60.png",
-    "128": "/timerx3/icon-128.png"
+    "64": "/timerx3/icon-64.png",
+    "128": "/timerx3/icon-128.png",
+    "256": "/timerx3/icon-256.png"
   },
   "launch_path": "/timerx3/",
   "developer": {
