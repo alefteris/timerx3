@@ -529,6 +529,14 @@
                 }
             };
 
+            var confirmUnloadHandler = function confirmUnloadHandler(event) {
+                if (timer1.status !== 'off' || timer2.status !== 'off' || timer3.status !== 'off') {
+                    var confirmationMsg = 'An alarm is still running.';
+                    (event || window.event).returnValue = confirmationMsg; //Gecko + IE
+                    return confirmationMsg; //Webkit
+                }
+            };
+
 
             // Register event listeners
             ////////////////////////////////////////////////////////////////////
@@ -562,6 +570,8 @@
             // Settings
             new Hammer(notificationsButton).on('tap', checkForNotificationPerm);
             new Hammer(appInstallButton).on('tap', appInstallHandler);
+            // Window
+            window.addEventListener('beforeunload', confirmUnloadHandler);
 
             window.onblur = function() {
                 windowHasFocus = false;
