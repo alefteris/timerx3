@@ -56,7 +56,7 @@ Here is a list of web standards used by the app and supported by modern web brow
 
 ### Libs
 
-The following are the only JavaScript libraries I used, mainly because it would be quite complicated to do it myself. You can also see what I used in the [component.json](https://github.com/alefteris/timerx3/blob/master/component.json) file.
+The following are the only JavaScript libraries I used, mainly because it would be quite complicated to do it myself. You can also see what I used in the [bower.json](https://github.com/alefteris/timerx3/blob/master/bower.json) file.
 
  * [normalize.scss](http://necolas.github.io/normalize.css/): used for normalizing browser default styles
  * [hammer.js](http://eightmedia.github.io/hammer.js/): used for the tap and swipe touch gestures
@@ -98,10 +98,11 @@ For the last two browsers on Android, when the app goes into the background, the
 
 ## Build Instructions
 
-You will need to have [Node.js](http://nodejs.org/) installed in your system.
+You will need to have [Node.js](http://nodejs.org/) and [Ruby](http://www.ruby-lang.org/) installed in your system.
 
 ``` shell
 npm install -g grunt-cli bower
+gem install compass
 git clone git://github.com/alefteris/timerx3.git
 cd timerx3
 npm install
