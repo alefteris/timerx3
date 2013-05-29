@@ -72,7 +72,7 @@ Just visit <a href="http://alefteris.github.io/timerx3/">http://alefteris.github
 
 To install it as an app, go to the app settings in the side panel. This is supported in desktop Chrome and Firefox.
 
-### Install it from an web app store
+### Install it from a web app store
 
 Install it as an app from the Firefox Marketplace or the Chrome Web Store.
 
