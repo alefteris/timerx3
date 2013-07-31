@@ -281,7 +281,8 @@ module.exports = function (grunt) {
                         '.nojekyll',
                         '*.webapp',
                         'media/*.ogg',
-                        'google09270ac9ac4a3a5d.html'
+                        'google09270ac9ac4a3a5d.html',
+                        'CNAME'
                     ]
                 }, {
                     expand: true,
