@@ -54,9 +54,9 @@ Here is a list of web standards used by the app and supported by modern web brow
  * [Bower](http://bower.io/): used for installing the third-party libraries
  * [SASS + Compass](http://compass-style.org/): used for making CSS authoring easier
 
-### Libs
+### Libraries
 
-The following are the only JavaScript libraries I used, mainly because it would be quite complicated to do it myself. You can also see what I used in the [bower.json](https://github.com/alefteris/timerx3/blob/master/bower.json) file.
+The following are the only libraries I used, mainly because it would be quite complicated to do it myself. You can also see what I used in the [bower.json](https://github.com/alefteris/timerx3/blob/master/bower.json) file.
 
  * [normalize.scss](http://necolas.github.io/normalize.css/): used for normalizing browser default styles
  * [hammer.js](http://eightmedia.github.io/hammer.js/): used for the tap and swipe touch gestures
